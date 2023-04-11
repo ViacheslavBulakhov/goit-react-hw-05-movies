@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 import AdditionalInformationWrap from 'components/filmDetails/additionalinformation/AdditionalInformation';
 import BasicInforamtion from 'components/filmDetails/basicInformation/BasicInformation';
