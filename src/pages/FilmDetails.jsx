@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+
+import AdditionalInformationWrap from 'components/filmDetails/additionalinformation/AdditionalInformation';
+import BasicInforamtion from 'components/filmDetails/basicInformation/BasicInformation';
 
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
+
 export function FilmDetails() {
   const [filmDetails, setFilmDetails] = useState([]);
   const { id } = useParams();
+
+  const location = useLocation();
+
+  const backLinkLocation = useRef(location.state?.from ?? '/movies');
 
   useEffect(() => {
     async function fetchTrendMovies() {
@@ -23,32 +31,13 @@ export function FilmDetails() {
 
   return (
     <>
-      <button>Go back</button>
-      <div>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${filmDetails.poster_path}`}
-          alt={`${filmDetails.original_title}`}
-        />
-        <ul>
-          <li>
-            <h2>{filmDetails.original_title}</h2>
-            <p>User score : {filmDetails.vote_average}%</p>
-          </li>
-          <li>
-            <h3>overview</h3>
-            <p>{filmDetails.overview}</p>
-          </li>
-          <li>
-            <h3>Genres</h3>
-            <p>{filmDetails.genres?.map(({ name }) => `${name} `)}</p>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <p>Additional information</p>
-        <Link to="cast">Cast</Link>
-        <Link to="reviews">Reviews</Link>
-      </div>
+      <BasicInforamtion
+        filmDetails={filmDetails}
+        backLinkLocation={backLinkLocation.current}
+      />
+
+      <AdditionalInformationWrap />
+
       <Outlet />
     </>
   );

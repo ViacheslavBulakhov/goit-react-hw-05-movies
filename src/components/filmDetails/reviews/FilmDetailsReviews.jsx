@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { ReviewsWrap } from './filmReviewsWrap.styled';
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
 
 export default function FilmDetailsReviews() {
@@ -23,14 +24,19 @@ export default function FilmDetailsReviews() {
 
   return (
     <div>
-      {filmDetails.results?.map(item => (
-        <div key={item.id}>
-          <h3>Author: {item.author}</h3>
-          <p>{item.created_at}</p>
-          <p>{item.content}</p>
-        </div>
-      ))}
-      {filmDetails.results?.length === 0 && <div>Something put there</div>}
+      <ReviewsWrap>
+        {filmDetails.results?.map(item => (
+          <li key={item.id}>
+            <h3>Author: {item.author}</h3>
+            <p>{item.created_at}</p>
+            <p>{item.content}</p>
+          </li>
+        ))}
+      </ReviewsWrap>
+
+      {filmDetails.results?.length === 0 && (
+        <h2>We don't have any reviews for this movie</h2>
+      )}
     </div>
   );
 }

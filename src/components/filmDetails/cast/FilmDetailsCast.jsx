@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import notFoundImage from 'images/notFoundImage.png';
+import { CastWrap, CastItemWrap } from './FilmCastWrap.styled';
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
 
 export default function FilmDetailsCast() {
@@ -20,20 +22,30 @@ export default function FilmDetailsCast() {
 
     fetchTrendMovies();
   }, [id]);
-  console.log(filmDetails.cast);
+
   return (
-    <div>
+    <CastWrap>
       {filmDetails.cast?.map(item => (
-        <div key={item.id}>
+        <CastItemWrap key={item.id}>
           <img
-            src={`https://image.tmdb.org/t/p/w500${item.profile_path}`}
+            width={250}
+            height={250}
+            src={`${
+              item.profile_path
+                ? `https://image.tmdb.org/t/p/w500${item.profile_path}`
+                : notFoundImage
+            }`}
             alt={item.name}
           />
-          <p>{item.name}</p>
-          <p>Character: {item.character}</p>
-        </div>
+          <div>
+            <p>{item.name}</p>
+            <p>Character: {item.character}</p>
+          </div>
+        </CastItemWrap>
       ))}
-      {filmDetails.cast?.length === 0 && <div>Something put there cast</div>}
-    </div>
+      {filmDetails.cast?.length === 0 && (
+        <h2>We don't have any cast for this movie</h2>
+      )}
+    </CastWrap>
   );
 }

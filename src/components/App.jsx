@@ -2,11 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 import SharedLayout from './SharedLayout/SharedLayout';
 import Home from '../pages/Home';
 import { FilmDetails } from 'pages/FilmDetails';
-import FilmDetailsReviews from './filmDetails/FilmDetailsReviews';
-import FilmDetailsCast from './filmDetails/FilmDetailsCast';
+import FilmDetailsReviews from './filmDetails/reviews/FilmDetailsReviews';
+import FilmDetailsCast from './filmDetails/cast/FilmDetailsCast';
 import { Movies } from 'pages/Movies';
-
-//import NotFound from '../pages/header/NotFound';
+import NotFound from './NotFound/NotFound';
 
 export const App = () => {
   return (
@@ -20,6 +19,7 @@ export const App = () => {
           <Route path="cast" element={<FilmDetailsCast />} />
         </Route>
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

@@ -1,7 +1,7 @@
 @import-normalize; /* bring in normalize.css styles */
 ol,
 ul {
-  list-style: auto;
+  list-style: none;
 }
 body {
   margin: 0;
