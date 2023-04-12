@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {
   SearchbarWrap,
@@ -33,3 +34,6 @@ export default function Searchbar({ onSubmit }) {
     </SearchbarWrap>
   );
 }
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

@@ -1,14 +1,16 @@
-import { useRef, useEffect, useState } from 'react';
-import axios from 'axios';
+import { useRef, useEffect, useState, Suspense } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 
+import axios from 'axios';
+
+import Loader from 'components/loader/Loader';
 import AdditionalInformationWrap from 'components/filmDetails/additionalinformation/AdditionalInformation';
 import BasicInforamtion from 'components/filmDetails/basicInformation/BasicInformation';
 
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
 
-export function FilmDetails() {
-  const [filmDetails, setFilmDetails] = useState([]);
+export default function FilmDetails() {
+  const [filmDetails, setFilmDetails] = useState({});
   const { id } = useParams();
 
   const location = useLocation();
@@ -37,8 +39,9 @@ export function FilmDetails() {
       />
 
       <AdditionalInformationWrap />
-
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }

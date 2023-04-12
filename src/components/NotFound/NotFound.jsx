@@ -1,5 +1,6 @@
 import notFoundImage from 'images/notfoundDesc.png';
 import { Link } from 'react-router-dom';
+
 export default function NotFound() {
   return (
     <>

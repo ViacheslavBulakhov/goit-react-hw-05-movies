@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+
+import axios from 'axios';
+
 import { ReviewsWrap } from './filmReviewsWrap.styled';
+
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
 
 export default function FilmDetailsReviews() {
@@ -13,6 +16,7 @@ export default function FilmDetailsReviews() {
       try {
         const url = `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${API_KEY}`;
         const response = await axios.get(url);
+
         setFilmDetails(response.data);
       } catch (error) {
         console.log(error.message);

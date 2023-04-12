@@ -1,5 +1,8 @@
-import HeaderNavigation from 'components/header/Header';
 import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
+
+import HeaderNavigation from 'components/header/Header';
+import Loader from '../loader/Loader';
 
 const SharedLayout = () => {
   return (
@@ -8,7 +11,9 @@ const SharedLayout = () => {
         <HeaderNavigation />
       </header>
       <main>
-        <Outlet />
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   );

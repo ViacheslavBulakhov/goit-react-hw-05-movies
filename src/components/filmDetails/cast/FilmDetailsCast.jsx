@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
 import notFoundImage from 'images/notFoundImage.png';
 import { CastWrap, CastItemWrap } from './FilmCastWrap.styled';
+
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
 
 export default function FilmDetailsCast() {

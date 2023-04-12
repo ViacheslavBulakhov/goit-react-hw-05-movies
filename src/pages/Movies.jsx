@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
+import axios from 'axios';
 import Notiflix from 'notiflix';
+
 import Searchbar from 'components/searchbar/Searchbar';
+import Loader from '../components/loader/Loader';
 
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
 
-export function Movies() {
+export default function Movies() {
   const [films, setFilms] = useState([]);
   const [searchParams] = useSearchParams();
+  const [isLoader, setIsLoader] = useState(false);
 
   const [searchValue, setSearchValue] = useState(
     () => searchParams.get('query') ?? ''
@@ -23,6 +26,7 @@ export function Movies() {
     }
 
     async function fetchTrendMovies() {
+      setIsLoader(true);
       try {
         const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchValue}`;
         const response = await axios.get(url);
@@ -35,7 +39,9 @@ export function Movies() {
         }
 
         setFilms(response.data);
+        setIsLoader(false);
       } catch (error) {
+        setIsLoader(false);
         console.log(error.message);
       }
     }
@@ -56,6 +62,7 @@ export function Movies() {
   return (
     <>
       <Searchbar onSubmit={handleSubmit} />
+      {isLoader && <Loader />}
       {films.results?.length > 0 && (
         <ul>
           {films.results?.map(({ id, title }) => (

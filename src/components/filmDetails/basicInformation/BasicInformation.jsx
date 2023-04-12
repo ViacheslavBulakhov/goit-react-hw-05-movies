@@ -1,13 +1,16 @@
 import notFoundImage from 'images/notFoundImage.png';
 import { BasicInforamtionWrap } from './BasicInformationWrap.styled';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function BasicInforamtion({ filmDetails, backLinkLocation }) {
   const image = filmDetails.poster_path
     ? `https://image.tmdb.org/t/p/w500${filmDetails.poster_path}`
     : notFoundImage;
 
-  const userScore = Math.ceil(filmDetails.vote_average);
+  const userScore = filmDetails.vote_average
+    ? Math.ceil(filmDetails.vote_average)
+    : 0;
 
   return (
     <BasicInforamtionWrap>
@@ -25,9 +28,14 @@ export default function BasicInforamtion({ filmDetails, backLinkLocation }) {
         </li>
         <li>
           <h3>Genres</h3>
-          <p>{filmDetails.genres?.map(({ name }) => `${name} `)}</p>
+          <p>{filmDetails.genres?.map(({ name }) => `${name}`)}</p>
         </li>
       </ul>
     </BasicInforamtionWrap>
   );
 }
+BasicInforamtion.propTypes = {
+  filmDetails: PropTypes.object.isRequired,
+  backLinkLocation: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    .isRequired,
+};

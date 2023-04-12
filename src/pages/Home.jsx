@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
 import axios from 'axios';
 
 const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
@@ -23,6 +24,7 @@ export default function Home() {
 
     fetchTrendMovies();
   }, []);
+
   return (
     <>
       <h2>Trending today</h2>
