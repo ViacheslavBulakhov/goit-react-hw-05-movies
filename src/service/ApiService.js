@@ -6,13 +6,12 @@ export default function ApiServices({ value, type }) {
   switch (type) {
     case 'homePageUrl':
       return `https://api.themoviedb.org/3/trending/${mediaType}/${timeWindow}?api_key=${API_KEY}`;
-      break;
     case 'filmDetailsPageUrl':
       return `https://api.themoviedb.org/3/movie/${value}?api_key=${API_KEY}`;
-      break;
+
     case 'moviesUrl':
       return `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${value}`;
-      break;
+
     default:
       console.log('type undefined');
       break;
