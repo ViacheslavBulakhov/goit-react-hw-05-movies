@@ -6,11 +6,10 @@ import axios from 'axios';
 import Loader from 'components/loader/Loader';
 import AdditionalInformationWrap from 'components/filmDetails/additionalinformation/AdditionalInformation';
 import BasicInforamtion from 'components/filmDetails/basicInformation/BasicInformation';
-
-const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
+import ApiServices from 'service/ApiService';
 
 export default function FilmDetails() {
-  const [filmDetails, setFilmDetails] = useState({});
+  const [filmDetails, setFilmDetails] = useState(null);
   const { id } = useParams();
 
   const location = useLocation();
@@ -20,8 +19,9 @@ export default function FilmDetails() {
   useEffect(() => {
     async function fetchTrendMovies() {
       try {
-        const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
-        const response = await axios.get(url);
+        const response = await axios.get(
+          ApiServices({ type: 'filmDetailsPageUrl', value: id })
+        );
         setFilmDetails(response.data);
       } catch (error) {
         console.log(error.message);
@@ -33,10 +33,12 @@ export default function FilmDetails() {
 
   return (
     <>
-      <BasicInforamtion
-        filmDetails={filmDetails}
-        backLinkLocation={backLinkLocation.current}
-      />
+      {filmDetails && (
+        <BasicInforamtion
+          filmDetails={filmDetails}
+          backLinkLocation={backLinkLocation.current}
+        />
+      )}
 
       <AdditionalInformationWrap />
       <Suspense fallback={<Loader />}>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import axios from 'axios';
 import Notiflix from 'notiflix';
 
 import Searchbar from 'components/searchbar/Searchbar';
 import Loader from '../components/loader/Loader';
-
-const API_KEY = '663a9254ccdd905d0193e78c0f67091c';
+import ApiServices from 'service/ApiService';
+import { FilmList } from 'components/FilmList/FilmList';
 
 export default function Movies() {
   const [films, setFilms] = useState([]);
@@ -18,8 +18,6 @@ export default function Movies() {
     () => searchParams.get('query') ?? ''
   );
 
-  const location = useLocation();
-
   useEffect(() => {
     if (searchValue === '') {
       return;
@@ -28,8 +26,9 @@ export default function Movies() {
     async function fetchTrendMovies() {
       setIsLoader(true);
       try {
-        const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchValue}`;
-        const response = await axios.get(url);
+        const response = await axios.get(
+          ApiServices({ type: 'moviesUrl', value: searchValue })
+        );
 
         if (response.data.results.length === 0) {
           Notiflix.Notify.failure(
@@ -63,17 +62,7 @@ export default function Movies() {
     <>
       <Searchbar onSubmit={handleSubmit} />
       {isLoader && <Loader />}
-      {films.results?.length > 0 && (
-        <ul>
-          {films.results?.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`${id}`} state={{ from: location }}>
-                {title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      {films.results?.length > 0 && <FilmList films={films.results} />}
     </>
   );
 }
