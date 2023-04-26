@@ -33,17 +33,20 @@ export default function FilmDetails() {
 
   return (
     <>
-      {filmDetails && (
-        <BasicInforamtion
-          filmDetails={filmDetails}
-          backLinkLocation={backLinkLocation.current}
-        />
+      {filmDetails ? (
+        <>
+          <BasicInforamtion
+            filmDetails={filmDetails}
+            backLinkLocation={backLinkLocation.current}
+          />
+          <AdditionalInformationWrap />
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </>
+      ) : (
+        <h1>No information about this film</h1>
       )}
-
-      <AdditionalInformationWrap />
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
     </>
   );
 }
